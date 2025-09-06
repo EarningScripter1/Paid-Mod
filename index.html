@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Paid Hack Purchase</title>
+  <style>
+    :root{
+      --bg:#0b0f17;
+      --card:#111827cc;
+      --muted:#9ca3af;
+      --text:#f3f4f6;
+      --primary:#7c3aed;
+      --primary-2:#06b6d4;
+      --accent:#22c55e;
+      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      color:var(--text); background: radial-gradient(1200px 800px at 10% 10%, #1f2937, transparent 60%), radial-gradient(1000px 800px at 90% 20%, #0f172a, transparent 55%), linear-gradient(180deg, #0b0f17, #0b0f17);
+      display:grid; place-items:center; padding:20px;
+    }
+    .container{ width:min(560px, 100%); }
+    .card{
+      background:var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
+      border:1px solid rgba(255,255,255,.06); border-radius:24px; box-shadow: var(--shadow);
+      overflow:hidden; padding:22px;
+      opacity:0; transform:translateY(20px); transition:opacity .5s ease, transform .5s ease;
+    }
+    .card.active{ opacity:1; transform:translateY(0); }
+
+    h1{ margin:0 0 10px; font-size:22px; }
+    p{ color:var(--muted); line-height:1.5; }
+    ul{ margin:10px 0 20px; padding-left:20px; color:var(--muted); }
+    li{ margin-bottom:6px; }
+
+    button{
+      appearance:none; border:0; border-radius:14px; padding:14px 16px; font-weight:700; color:white; cursor:pointer;
+      background:linear-gradient(135deg, var(--primary), var(--primary-2));
+      transition: transform .06s ease, box-shadow .2s ease; box-shadow: 0 8px 24px rgba(124,58,237,.35);
+      width:100%; margin-top:14px;
+    }
+    button:active{ transform: translateY(1px); }
+
+    .channels{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px; margin-top:20px; }
+    .chip{
+      display:flex; align-items:center; justify-content:center; padding:14px; border-radius:14px; border:1px solid rgba(255,255,255,.08);
+      background:rgba(255,255,255,.03); cursor:pointer; transition:.2s;
+    }
+    .chip.selected{ background:rgba(124,58,237,.2); border-color:transparent; }
+
+    .note{ color:var(--muted); font-size:14px; margin:16px 0; }
+
+    .hidden{ display:none; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Step 1: Features -->
+    <div class="card active" id="step1">
+      <h1>🔥 Premium Hack Access</h1>
+      <p>Get full access to our premium hack with amazing features:</p>
+      <ul>
+        <li>✔ Advanced Protection</li>
+        <li>✔ Easy to Use</li>
+        <li>✔ Instant Setup</li>
+        <li>✔ 24/7 Support</li>
+      </ul>
+      <button id="buyNow">Buy Now</button>
+    </div>
+
+    <!-- Step 2: Select Channel -->
+    <div class="card hidden" id="step2">
+      <h1>Select Payment Channel</h1>
+      <div class="channels" id="channels">
+        <div class="chip" data-channel="Paytm">Paytm</div>
+        <div class="chip" data-channel="GooglePay">Google Pay</div>
+        <div class="chip" data-channel="UPI">UPI</div>
+        <div class="chip" data-channel="More">More</div>
+      </div>
+      <button id="payNow">Pay Now</button>
+    </div>
+
+    <!-- Step 3: Proceed -->
+    <div class="card hidden" id="step3" data-amount="999" data-bot="BOT_USERNAME_HERE" data-msg="PAID999">
+      <h1>Confirm Payment</h1>
+      <p class="note">You are going to pay <strong>₹999</strong></p>
+      <button id="proceed">Proceed to Payment</button>
+    </div>
+  </div>
+
+  <script>
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const step3 = document.getElementById('step3');
+    let selected = null;
+
+    function showStep(show){
+      [step1,step2,step3].forEach(s=>{ s.classList.add('hidden'); s.classList.remove('active'); });
+      show.classList.remove('hidden');
+      setTimeout(()=> show.classList.add('active'), 20);
+    }
+
+    document.getElementById('buyNow').onclick = ()=> showStep(step2);
+
+    document.getElementById('channels').onclick = (e)=>{
+      const chip = e.target.closest('.chip');
+      if(!chip) return;
+      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
+      chip.classList.add('selected');
+      selected = chip.dataset.channel;
+    }
+
+    document.getElementById('payNow').onclick = ()=>{
+      if(!selected){ alert('Please select a channel'); return; }
+      showStep(step3);
+    }
+
+    document.getElementById('proceed').onclick = ()=>{
+      const amount = step3.dataset.amount;
+      const bot = step3.dataset.bot;
+      const msg = step3.dataset.msg + '_' + selected;
+      const tgApp = `tg://resolve?domain=${bot}&start=${encodeURIComponent(msg)}`;
+      const tgWeb = `https://t.me/${bot}?start=${encodeURIComponent(msg)}`;
+      window.open(tgApp, '_blank');
+      setTimeout(()=>{ window.location.href = tgWeb; }, 1000);
+    }
+  </script>
+</body>
+</html>
