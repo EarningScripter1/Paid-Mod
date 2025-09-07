@@ -1,183 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Paid Hack Purchase</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Maintenance</title>
   <style>
-    :root{
-      --bg:#0b0f17;
-      --card:#111827cc;
-      --muted:#9ca3af;
-      --text:#f3f4f6;
-      --primary:#7c3aed;
-      --primary-2:#06b6d4;
-      --accent:#22c55e;
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #0b0f17, #1f2937);
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+      color: #f3f4f6;
     }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      color:var(--text); background: radial-gradient(1200px 800px at 10% 10%, #1f2937, transparent 60%), radial-gradient(1000px 800px at 90% 20%, #0f172a, transparent 55%), linear-gradient(180deg, #0b0f17, #0b0f17);
-      display:grid; place-items:center; padding:20px;
+    .card {
+      background: rgba(17, 24, 39, 0.85);
+      padding: 30px 25px;
+      border-radius: 20px;
+      text-align: center;
+      max-width: 420px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+      backdrop-filter: blur(14px);
     }
-    .container{ width:min(640px, 100%); }
-    .card{
-      background:var(--card); backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px);
-      border:1px solid rgba(255,255,255,.06); border-radius:20px; box-shadow: var(--shadow);
-      overflow:hidden; padding:22px;
-      opacity:0; transform:translateY(20px); transition:opacity .45s ease, transform .45s ease;
+    h1 {
+      margin: 0 0 15px;
+      font-size: 22px;
+      color: #7c3aed;
     }
-    .card.active{ opacity:1; transform:translateY(0); }
-
-    h1{ margin:0 0 10px; font-size:22px; }
-    p{ color:var(--muted); line-height:1.5; }
-    ul{ margin:10px 0 20px; padding-left:20px; color:var(--muted); }
-    li{ margin-bottom:6px; }
-
-    .row{ display:flex; gap:10px; align-items:center; }
-
-    button{
-      appearance:none; border:0; border-radius:12px; padding:12px 14px; font-weight:700; color:white; cursor:pointer;
-      background:linear-gradient(135deg, var(--primary), var(--primary-2));
-      transition: transform .06s ease, box-shadow .2s ease; box-shadow: 0 8px 20px rgba(124,58,237,.28);
-      width:100%; margin-top:14px;
+    p {
+      font-size: 15px;
+      color: #d1d5db;
+      line-height: 1.5;
     }
-    button.small{ width:auto; padding:10px 12px; border-radius:10px; }
-    button:active{ transform: translateY(1px); }
-
-    .channels{ display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:12px; margin-top:16px; }
-    .chip{
-      display:flex; align-items:center; justify-content:center; padding:12px; border-radius:12px; border:1px solid rgba(255,255,255,.06);
-      background:rgba(255,255,255,.03); cursor:pointer; transition:.15s;
+    button {
+      margin-top: 20px;
+      padding: 14px 18px;
+      border: none;
+      border-radius: 12px;
+      font-weight: bold;
+      font-size: 16px;
+      color: white;
+      cursor: pointer;
+      width: 100%;
+      background: linear-gradient(135deg, #06b6d4, #7c3aed);
+      box-shadow: 0 6px 18px rgba(124, 58, 237, .4);
+      transition: transform .1s ease-in-out;
     }
-    .chip.selected{ background:rgba(124,58,237,.18); border-color:transparent; }
-
-    .note{ color:var(--muted); font-size:14px; margin:12px 0; }
-
-    textarea{ width:100%; min-height:140px; border-radius:10px; padding:12px; font-family:inherit; font-size:14px; resize:vertical; background:rgba(0,0,0,.25); color:var(--text); border:1px solid rgba(255,255,255,.06); }
-
-    .hint{ font-size:13px; color:var(--muted); margin-top:10px; }
-
-    .hidden{ display:none; }
+    button:hover {
+      transform: scale(1.03);
+    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Step 1: Features -->
-    <div class="card active" id="step1">
-      <h1>🔥 Premium Hack Access</h1>
-      <p>Get full access to our premium hack with amazing features:</p>
-      <ul>
-        <li>✔ Advanced Protection</li>
-        <li>✔ Easy to Use</li>
-        <li>✔ Instant Setup</li>
-        <li>✔ 24/7 Support</li>
-      </ul>
-      <button id="buyNow">Buy Now</button>
-    </div>
-
-    <!-- Step 2: Select Channel -->
-    <div class="card hidden" id="step2">
-      <h1>Select Payment Channel</h1>
-      <div class="channels" id="channels">
-        <div class="chip" data-channel="Paytm">Paytm</div>
-        <div class="chip" data-channel="Google Pay">Google Pay</div>
-        <div class="chip" data-channel="UPI">UPI</div>
-        <div class="chip" data-channel="More">More</div>
-      </div>
-      <button id="payNow">Pay Now</button>
-    </div>
-
-    <!-- Step 3: Proceed -->
-    <div class="card hidden" id="step3" data-amount="499" data-bot="EsPaidMods_bot">
-      <h1>Confirm Payment</h1>
-      <p class="note">You are going to pay <strong>₹499</strong></p>
-
-      <div class="hint">Please copy the below message and send to the bot by clicking on <strong>Proceed to Payment</strong>.</div>
-
-      <textarea id="messageBox" readonly></textarea>
-      <div style="display:flex; gap:8px; margin-top:10px;">
-        <button class="small" id="copyBtn">Copy Message</button>
-        <button class="small" id="editBtn">Edit</button>
-      </div>
-
-      <div class="hint">After copying, open Telegram bot and paste the message into chat, then press Send.</div>
-      <div style="margin-top:12px;"><button id="proceed">Proceed to Payment</button></div>
-    </div>
+  <div class="card">
+    <h1>⏳ Maintenance Mode</h1>
+    <p>Paid mod buy options are <strong>stopped for a while</strong>.<br>
+       Buy option will be available again after some time. 😇</p>
+    <p>Till that time, you can also use the free services by clicking on the button below. Free is also best 👇</p>
+    <a href="https://apksdownload.github.io/Color-Hack-v5.0/">
+      <button>Download Free Service</button>
+    </a>
   </div>
-
-  <script>
-    const step1 = document.getElementById('step1');
-    const step2 = document.getElementById('step2');
-    const step3 = document.getElementById('step3');
-    const msgBox = document.getElementById('messageBox');
-    const copyBtn = document.getElementById('copyBtn');
-    const editBtn = document.getElementById('editBtn');
-
-    let selected = null;
-
-    function showStep(show){
-      [step1,step2,step3].forEach(s=>{ s.classList.add('hidden'); s.classList.remove('active'); });
-      show.classList.remove('hidden');
-      setTimeout(()=> show.classList.add('active'), 20);
-
-      // When showing step3, populate message with current data
-      if(show === step3){ populateMessage(); }
-    }
-
-    document.getElementById('buyNow').onclick = ()=> showStep(step2);
-
-    document.getElementById('channels').onclick = (e)=>{
-      const chip = e.target.closest('.chip');
-      if(!chip) return;
-      document.querySelectorAll('.chip').forEach(c=>c.classList.remove('selected'));
-      chip.classList.add('selected');
-      selected = chip.dataset.channel;
-    }
-
-    document.getElementById('payNow').onclick = ()=>{
-      if(!selected){ alert('Please select a channel'); return; }
-      showStep(step3);
-    }
-
-    function getCurrentTimeString(){
-      const now = new Date();
-      const opt = { day:'2-digit', month:'2-digit', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:true };
-      return now.toLocaleString('en-IN', opt);
-    }
-
-    function populateMessage(){
-      const amount = step3.dataset.amount;
-      const method = selected || 'Not selected';
-      const time = getCurrentTimeString();
-      const message = `Hello Bhai, I want to purchase paid mod apk\nPay amount :- ${amount}\nMethod :- ${method}\nTime :- ${time}\n\nPlease bhai, send me qr code then I will pay and send you screenshot, and then send me paid hack apk.\nThankyou.`;
-      msgBox.value = message;
-      msgBox.readOnly = true;
-    }
-
-    copyBtn.onclick = async ()=>{
-      try{
-        await navigator.clipboard.writeText(msgBox.value);
-        copyBtn.textContent = 'Copied ✓';
-        setTimeout(()=> copyBtn.textContent = 'Copy Message', 1500);
-      }catch(e){
-        alert('Copy failed — select the message and copy manually');
-      }
-    }
-
-    editBtn.onclick = ()=>{
-      if(msgBox.readOnly){ msgBox.readOnly = false; msgBox.focus(); editBtn.textContent='Lock'; }
-      else{ msgBox.readOnly = true; editBtn.textContent='Edit'; }
-    }
-
-    document.getElementById('proceed').onclick = ()=>{
-      const bot = step3.dataset.bot;
-      // Open bot chat (cannot prefill for bots reliably) — user will paste and send
-      const tgWeb = `https://t.me/${bot}`;
-      window.open(tgWeb, '_blank');
-    }
-  </script>
 </body>
 </html>
