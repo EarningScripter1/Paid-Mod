@@ -76,7 +76,7 @@
       <h1>Select Payment Channel</h1>
       <div class="channels" id="channels">
         <div class="chip" data-channel="Paytm">Paytm</div>
-        <div class="chip" data-channel="Google Pay">Google Pay</div>
+        <div class="chip" data-channel="GooglePay">Google Pay</div>
         <div class="chip" data-channel="UPI">UPI</div>
         <div class="chip" data-channel="More">More</div>
       </div>
@@ -86,7 +86,7 @@
     <!-- Step 3: Proceed -->
     <div class="card hidden" id="step3" data-amount="999" data-bot="EsPaidMods_bot">
       <h1>Confirm Payment</h1>
-      <p class="note">You are going to pay <strong>₹499</strong></p>
+      <p class="note">You are going to pay <strong>₹999</strong></p>
       <button id="proceed">Proceed to Payment</button>
     </div>
   </div>
@@ -131,12 +131,9 @@
       // Prefilled message
       const message = `Hello Bhai, I want to purchase paid mod apk\nPay amount :- ${amount}\nMethod :- ${selected}\nTime :- ${time}\n\nPlease bhai, send me qr code then I will pay and send you screenshot, and then send me paid hack apk.\nThankyou.`;
 
-      const tgApp = `tg://msg?text=${encodeURIComponent(message)}&to=@${bot}`;
+      // Telegram open with message typed
       const tgWeb = `https://t.me/${bot}?text=${encodeURIComponent(message)}`;
-      
-      // Try to open in Telegram app, fallback to web
-      window.open(tgApp, '_blank');
-      setTimeout(()=>{ window.location.href = tgWeb; }, 1200);
+      window.open(tgWeb, '_blank');
     }
   </script>
 </body>
